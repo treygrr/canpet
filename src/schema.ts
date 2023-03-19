@@ -17,10 +17,10 @@ export const DateTime = asNexusMethod(DateTimeResolver, "date");
 const Query = objectType({
   name: "Query",
   definition(t) {
-    t.nonNull.list.nonNull.field('allUsers', {
+    t.nonNull.list.nonNull.field('AllUsers', {
       type: "User",
       resolve: (_parent, _args, context: Context) => {
-        return context.prisma.user.findMany();
+        return context.prisma.user.findMany() || undefined;
       },
     });
   },
@@ -58,14 +58,14 @@ const User = objectType({
           .Posts();
       },
     });
-    t.list.field("locations", {
+    t.list.field("Locations", {
       type: "Location",
       resolve: (parent, _, context: Context) => {
         return context.prisma.user
           .findUnique({
             where: { id: parent.id || undefined },
           })
-          .locations();
+          .Locations();
       },
     });
   },
@@ -79,14 +79,14 @@ const Location = objectType({
     t.nonNull.field("updatedAt", { type: "DateTime" });
     t.nonNull.string("name");
     t.nonNull.boolean("published");
-    t.list.field("users", {
+    t.list.field("Users", {
       type: "User",
       resolve: (parent, _, context: Context) => {
         return context.prisma.location
           .findUnique({
-            where: { id: parent.id || undefined },
+            where: { id: parent.id },
           })
-          .users();
+          .Users();
       },
     });
 
@@ -313,8 +313,8 @@ const Author = objectType({
 
 export const schema = makeSchema({
   types: [
-    Query,
     User,
+    Query,
     Location,
     Post,
     Address,

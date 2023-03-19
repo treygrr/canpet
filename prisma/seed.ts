@@ -111,7 +111,7 @@ const createLocation: Prisma.LocationCreateInput[] = [
   {
       name: 'San Francisco',
       published: true,
-      users: {
+      Users: {
         connect: {
           id: 1,
         }

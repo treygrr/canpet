@@ -25,7 +25,7 @@ model User {
   bio        String?            @db.VarChar(1000)
   Posts      Post[]
   Addresses  Address[]
-  locations  Location[]
+  Locations  Location[]
 }
 
 model Location {
@@ -37,7 +37,7 @@ model Location {
   Posts     Post[]
   Animals   Animal[]
   Addresses Address[]
-  users     User[]
+  Users     User[]
 }
 
 model Address {
