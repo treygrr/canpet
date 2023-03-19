@@ -108,44 +108,34 @@ const createBreed: Prisma.BreedCreateInput[] = [
 ];
 
 const createLocation: Prisma.LocationCreateInput[] = [
-    {
-        name: 'San Francisco SPCA',
-        Users: {
-          connect: [
-            {
-              id: 1,
-            }
-          ]
-        },
-        Posts: {
-          connect: {
-            id: 1,
-          }
-        },
-        Addresses: {
-            create: [
+  {
+      name: 'San Francisco',
+      published: true,
+      users: {
+        connect: {
+          id: 1,
+        }
+      },
+      Addresses: {
+          create: [
               {
                 addressLine1: '123 Main St',
                 addressLine2: 'Apt 1',
                 city: 'San Francisco',
                 state: 'CA',
-                zip: '94111',
                 country: 'USA',
+                zip: '94111',
                 AddressType: {
-                  connectOrCreate: {
-                    where: {
+                  connect: {
                       id: 1,
-                    },
-                    create: {
-                      name: 'Shipping',
-                    },
                   },
-                }  
-              } 
-            ]
-        }
-    },
+                }
+              },
+            ],
+      },
+  },
 ];
+
 
 const createAnimal: Prisma.AnimalCreateInput[] = [
     {

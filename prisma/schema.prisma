@@ -11,33 +11,33 @@ datasource db {
 }
 
 model User {
-  id         Int        @id @default(autoincrement())
-  privateKey String     @unique @default(uuid())
-  salt       String     @default(uuid())
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-  username   String     @unique
-  email      String     @unique
+  id         Int                @id @default(autoincrement())
+  privateKey String             @unique @default(uuid())
+  salt       String             @default(uuid())
+  createdAt  DateTime           @default(now())
+  updatedAt  DateTime           @updatedAt
+  username   String             @unique
+  email      String             @unique
   password   String
-  firstName  String     @db.VarChar(255)
-  lastName   String     @db.VarChar(255)
-  age        Int?       @db.SmallInt
-  bio        String?    @db.VarChar(1000)
+  firstName  String             @db.VarChar(255)
+  lastName   String             @db.VarChar(255)
+  age        Int?               @db.SmallInt
+  bio        String?            @db.VarChar(1000)
   Posts      Post[]
   Addresses  Address[]
-  Locations  Location[]
+  locations  Location[]
 }
 
 model Location {
-  id        Int       @id @default(autoincrement())
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  name      String    @db.VarChar(255)
-  published Boolean   @default(false)
+  id        Int                @id @default(autoincrement())
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
+  name      String             @db.VarChar(255)
+  published Boolean            @default(false)
   Posts     Post[]
   Animals   Animal[]
   Addresses Address[]
-  Users     User[]
+  users     User[]
 }
 
 model Address {

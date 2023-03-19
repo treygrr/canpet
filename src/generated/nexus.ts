@@ -202,12 +202,12 @@ export interface NexusGenFieldTypes {
     Addresses: Array<NexusGenRootTypes['Address'] | null> | null; // [Address]
     Animals: Array<NexusGenRootTypes['Animal'] | null> | null; // [Animal]
     Posts: Array<NexusGenRootTypes['Post'] | null> | null; // [Post]
-    Users: Array<NexusGenRootTypes['User'] | null> | null; // [User]
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: number; // Int!
     name: string; // String!
     published: boolean; // Boolean!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
+    users: Array<NexusGenRootTypes['User'] | null> | null; // [User]
   }
   Post: { // field return type
     author: NexusGenRootTypes['Author'] | null; // Author
@@ -219,7 +219,7 @@ export interface NexusGenFieldTypes {
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
   Query: { // field return type
-    AllUsers: NexusGenRootTypes['User'][]; // [User!]!
+    allUsers: NexusGenRootTypes['User'][]; // [User!]!
   }
   Species: { // field return type
     Animals: Array<NexusGenRootTypes['Animal'] | null> | null; // [Animal]
@@ -231,7 +231,6 @@ export interface NexusGenFieldTypes {
   }
   User: { // field return type
     Addresses: Array<NexusGenRootTypes['Address'] | null> | null; // [Address]
-    Locations: Array<NexusGenRootTypes['Location'] | null> | null; // [Location]
     Posts: Array<NexusGenRootTypes['Post'] | null> | null; // [Post]
     age: string | null; // String
     bio: string | null; // String
@@ -240,6 +239,7 @@ export interface NexusGenFieldTypes {
     firstName: string; // String!
     id: number; // Int!
     lastName: string; // String!
+    locations: Array<NexusGenRootTypes['Location'] | null> | null; // [Location]
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
     username: string; // String!
   }
@@ -307,12 +307,12 @@ export interface NexusGenFieldTypeNames {
     Addresses: 'Address'
     Animals: 'Animal'
     Posts: 'Post'
-    Users: 'User'
     createdAt: 'DateTime'
     id: 'Int'
     name: 'String'
     published: 'Boolean'
     updatedAt: 'DateTime'
+    users: 'User'
   }
   Post: { // field return type name
     author: 'Author'
@@ -324,7 +324,7 @@ export interface NexusGenFieldTypeNames {
     updatedAt: 'DateTime'
   }
   Query: { // field return type name
-    AllUsers: 'User'
+    allUsers: 'User'
   }
   Species: { // field return type name
     Animals: 'Animal'
@@ -336,7 +336,6 @@ export interface NexusGenFieldTypeNames {
   }
   User: { // field return type name
     Addresses: 'Address'
-    Locations: 'Location'
     Posts: 'Post'
     age: 'String'
     bio: 'String'
@@ -345,6 +344,7 @@ export interface NexusGenFieldTypeNames {
     firstName: 'String'
     id: 'Int'
     lastName: 'String'
+    locations: 'Location'
     updatedAt: 'DateTime'
     username: 'String'
   }

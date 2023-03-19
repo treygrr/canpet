@@ -17,7 +17,7 @@ export const DateTime = asNexusMethod(DateTimeResolver, "date");
 const Query = objectType({
   name: "Query",
   definition(t) {
-    t.nonNull.list.nonNull.field("AllUsers", {
+    t.nonNull.list.nonNull.field('allUsers', {
       type: "User",
       resolve: (_parent, _args, context: Context) => {
         return context.prisma.user.findMany();
@@ -58,14 +58,14 @@ const User = objectType({
           .Posts();
       },
     });
-    t.list.field("Locations", {
+    t.list.field("locations", {
       type: "Location",
       resolve: (parent, _, context: Context) => {
         return context.prisma.user
           .findUnique({
             where: { id: parent.id || undefined },
           })
-          .Locations();
+          .locations();
       },
     });
   },
@@ -79,16 +79,17 @@ const Location = objectType({
     t.nonNull.field("updatedAt", { type: "DateTime" });
     t.nonNull.string("name");
     t.nonNull.boolean("published");
-    t.list.field("Users", {
+    t.list.field("users", {
       type: "User",
       resolve: (parent, _, context: Context) => {
         return context.prisma.location
           .findUnique({
             where: { id: parent.id || undefined },
           })
-          .Users();
+          .users();
       },
     });
+
     t.list.field("Posts", {
       type: "Post",
       resolve: (parent, _, context: Context) => {

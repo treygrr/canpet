@@ -74,12 +74,12 @@ type Location {
   Addresses: [Address]
   Animals: [Animal]
   Posts: [Post]
-  Users: [User]
   createdAt: DateTime!
   id: Int!
   name: String!
   published: Boolean!
   updatedAt: DateTime!
+  users: [User]
 }
 
 type Post {
@@ -93,7 +93,7 @@ type Post {
 }
 
 type Query {
-  AllUsers: [User!]!
+  allUsers: [User!]!
 }
 
 type Species {
@@ -107,7 +107,6 @@ type Species {
 
 type User {
   Addresses: [Address]
-  Locations: [Location]
   Posts: [Post]
   age: String
   bio: String
@@ -116,6 +115,7 @@ type User {
   firstName: String!
   id: Int!
   lastName: String!
+  locations: [Location]
   updatedAt: DateTime!
   username: String!
 }
