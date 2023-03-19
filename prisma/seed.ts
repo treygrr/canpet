@@ -35,7 +35,7 @@ const createSpecies: Prisma.SpeciesCreateInput[] = [
 const createBreed: Prisma.BreedCreateInput[] = [
     {
         name: 'Labrador',
-        species: {
+        Species: {
             connect: {
                 id: 1,
             },
@@ -43,7 +43,7 @@ const createBreed: Prisma.BreedCreateInput[] = [
     },
     {
         name: 'Poodle',
-        species: {
+        Species: {
             connect: {
                 id: 1,
             },
@@ -51,7 +51,7 @@ const createBreed: Prisma.BreedCreateInput[] = [
     },
     {
         name: 'Pug',
-        species: {
+        Species: {
           connect: {
             id: 1,
           },
@@ -59,7 +59,7 @@ const createBreed: Prisma.BreedCreateInput[] = [
     },
     {
         name: 'Persian',
-        species: {
+        Species: {
           connect: {
             id: 2,
           },
@@ -67,7 +67,7 @@ const createBreed: Prisma.BreedCreateInput[] = [
     },
     {
         name: 'Siamese',
-        species: {
+        Species: {
           connect: {
             id: 2,
           },
@@ -75,7 +75,7 @@ const createBreed: Prisma.BreedCreateInput[] = [
     },
     {
         name: 'Budgie',
-        species: {
+        Species: {
           connect: {
             id: 3,
           },
@@ -83,7 +83,7 @@ const createBreed: Prisma.BreedCreateInput[] = [
     },
     {
         name: 'Canary',
-        species: {
+        Species: {
           connect: {
             id: 3,
           },
@@ -91,7 +91,7 @@ const createBreed: Prisma.BreedCreateInput[] = [
     },
     {
         name: 'Angora',
-        species: {
+        Species: {
           connect: {
             id: 4,
           },
@@ -99,7 +99,7 @@ const createBreed: Prisma.BreedCreateInput[] = [
     },
     {
         name: 'Dwarf',
-        species: {
+        Species: {
           connect: {
             id: 4,
           },
@@ -111,7 +111,7 @@ const createLocation: Prisma.LocationCreateInput[] = [
     {
         name: 'San Francisco SPCA',
         authorId: 1,
-        address: {
+        Address: {
           connectOrCreate: {
             where: {
               id: 1,
@@ -123,7 +123,7 @@ const createLocation: Prisma.LocationCreateInput[] = [
               state: 'CA',
               zip: '94111',
               country: 'USA',
-              addressType: {
+              AddressType: {
                 connectOrCreate: {
                   where: {
                     id: 1,
@@ -146,24 +146,23 @@ const createAnimal: Prisma.AnimalCreateInput[] = [
         height: 20,
         published: true,
         weight: 10,
-        species: {
+        Species: {
             connect: {
                 id: 1,
             }
         },
-        location: {
+        Location: {
           connect:{
             id: 1,
           }
         },
-        animalBreed: {
-          create: [
+        Breeds: {
+          connect: [
             {
-              breed: {
-                connect: {
-                  id: 1,
-                },
-              },
+              id: 1,
+            },
+            {
+              id: 2,
             }
           ]
         }
@@ -175,27 +174,26 @@ const createAnimal: Prisma.AnimalCreateInput[] = [
         height: 20,
         published: true,
         weight: 10,
-        species: {
+        Species: {
             connect: {
                 id: 1,
             }
         },
-        location: {
+        Location: {
           connect:{
             id: 1,
           }
         },
-        animalBreed: {
-          create: [
+        Breeds: {
+          connect: [
             {
-              breed: {
-                connect: {
-                  id: 1,
-                },
-              },
+              id: 1,
+            },
+            {
+              id: 2,
             }
           ]
-        }
+        },
     })),
 ];
 
@@ -206,7 +204,7 @@ const userData: Prisma.UserCreateInput[] = [
         password: 'password',
         firstName: 'Alice',
         lastName: 'Smith',
-        posts: {
+        Posts: {
             create: [
                 {
                     title: 'Join us for Prisma Day 2020 in Berlin',
@@ -215,7 +213,7 @@ const userData: Prisma.UserCreateInput[] = [
                 },
             ],
         },
-        address: {
+        Address: {
             create: [
                 {
                     addressLine1: '123 Main St',
@@ -224,7 +222,7 @@ const userData: Prisma.UserCreateInput[] = [
                     state: 'CA',
                     country: 'USA',
                     zip: '94111',
-                    addressType: {
+                    AddressType: {
                         connect: {
                             id: 1,
                         },

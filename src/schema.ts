@@ -17,7 +17,7 @@ export const DateTime = asNexusMethod(DateTimeResolver, "date");
 const Query = objectType({
   name: "Query",
   definition(t) {
-    t.nonNull.list.nonNull.field("allUsers", {
+    t.nonNull.list.nonNull.field("AllUsers", {
       type: "User",
       resolve: (_parent, _args, context: Context) => {
         return context.prisma.user.findMany();
@@ -30,54 +30,46 @@ const User = objectType({
   name: "User",
   definition(t) {
     t.nonNull.int("id");
-    t.nonNull.field("createdAt", { type: "DateTime" });
-    t.nonNull.field("updatedAt", { type: "DateTime" });
-    t.nonNull.string("userName");
+    t.nonNull.field("createdAt", { type: 'DateTime' });
+    t.nonNull.field("updatedAt", { type: 'DateTime' });
+    t.nonNull.string("username");
     t.nonNull.string("email");
     t.nonNull.string("firstName");
     t.nonNull.string("lastName");
-    t.nonNull.string("age");
-    t.nonNull.string("bio");
-    t.field("address", {
+    t.string("age");
+    t.string("bio");
+    t.list.field("Addresses", {
       type: "Address",
       resolve: (parent, _, context: Context) => {
         return context.prisma.user
           .findUnique({
             where: { id: parent.id || undefined },
           })
-          .address();
+          .Address();
       },
     });
-    t.field("posts", {
+    t.list.field("Posts", {
       type: "Post",
       resolve: (parent, _, context: Context) => {
         return context.prisma.user
           .findUnique({
             where: { id: parent.id || undefined },
           })
-          .posts();
+          .Posts();
       },
     });
-    t.field("location", {
+    t.field("Locations", {
       type: "Location",
       resolve: (parent, _, context: Context) => {
         return context.prisma.user
           .findUnique({
             where: { id: parent.id || undefined },
           })
-          .location();
+          .Location();
       },
     });
   },
 });
-
-const UserUniqueInput = inputObjectType({
-  name: 'UserUniqueInput',
-  definition(t) {
-    t.int('id')
-    t.string('email')
-  },
-})
 
 const Location = objectType({
   name: "Location",
@@ -87,54 +79,54 @@ const Location = objectType({
     t.nonNull.field("updatedAt", { type: "DateTime" });
     t.nonNull.string("name");
     t.nonNull.boolean("published");
-    t.field("author", {
+    t.field("User", {
       type: "User",
       resolve: (parent, _, context: Context) => {
         return context.prisma.location
           .findUnique({
             where: { id: parent.id || undefined },
           })
-          .user();
+          .User();
       },
     });
-    t.field("posts", {
+    t.field("Posts", {
       type: "Post",
       resolve: (parent, _, context: Context) => {
         return context.prisma.location
           .findUnique({
             where: { id: parent.id || undefined },
           })
-          .post();
+          .Post();
       },
     });
-    t.field("animals", {
+    t.field("Animals", {
       type: "Animal",
       resolve: (parent, _, context: Context) => {
         return context.prisma.location
           .findUnique({
             where: { id: parent.id || undefined },
           })
-          .animal();
+          .Animal();
       },
     });
-    t.field("users", {
+    t.field("User", {
       type: "User",
       resolve: (parent, _, context: Context) => {
         return context.prisma.location
           .findUnique({
             where: { id: parent.id || undefined },
           })
-          .user();
+          .User();
       },
     });
-    t.field("addresses", {
+    t.field("Addresses", {
       type: "Address",
       resolve: (parent, _, context: Context) => {
         return context.prisma.location
           .findUnique({
             where: { id: parent.id || undefined },
           })
-          .address();
+          .Address();
       },
     });
   },
@@ -152,38 +144,29 @@ const Address = objectType({
     t.nonNull.string("state");
     t.nonNull.string("zip");
     t.nonNull.string("country");
-    t.field("location", {
-      type: "Location",
-      resolve: (parent, _, context: Context) => {
-        return context.prisma.address
-          .findUnique({
-            where: { id: parent.id || undefined },
-          })
-          .location();
-      },
-    });
-    t.field("addressType", {
+    t.field("AddressType", {
       type: "AddressType",
       resolve: (parent, _, context: Context) => {
         return context.prisma.address
           .findUnique({
             where: { id: parent.id || undefined },
           })
-          .addressType();
-      },
-    });
-    t.field("user", {
-      type: "User",
-      resolve: (parent, _, context: Context) => {
-        return context.prisma.address
-          .findUnique({
-            where: { id: parent.id || undefined },
-          })
-          .user();
+          .AddressType();
       },
     });
   },
 });
+
+const AddressType = objectType({
+  name: "AddressType",
+  definition(t) {
+    t.nonNull.int("id");
+    t.nonNull.field("createdAt", { type: "DateTime" });
+    t.nonNull.field("updatedAt", { type: "DateTime" });
+    t.nonNull.string("name");
+  }
+});
+
 
 const Animal = objectType({
   name: "Animal",
@@ -194,24 +177,24 @@ const Animal = objectType({
     t.nonNull.string("name");
     t.nonNull.boolean("adopted");
     t.nonNull.boolean("published");
-    t.field("location", {
+    t.field("Location", {
       type: "Location",
       resolve: (parent, _, context: Context) => {
         return context.prisma.animal
           .findUnique({
             where: { id: parent.id || undefined },
           })
-          .location();
+          .Location();
       },
     });
-    t.field("species", {
+    t.field("Species", {
       type: "Species",
       resolve: (parent, _, context: Context) => {
         return context.prisma.animal
           .findUnique({
             where: { id: parent.id || undefined },
           })
-          .species();
+          .Species();
       },
     });
     t.field("birthDate", { type: "DateTime" });
@@ -221,55 +204,36 @@ const Animal = objectType({
     t.field("weight", { type: "Int" });
     t.field("height", { type: "Int" });
     t.field("description", { type: "String" });
-    t.field("animalBreed", {
-      type: "AnimalBreed",
+    t.list.field("breeds", {
+      type: "Breed",
       resolve: (parent, _, context: Context) => {
         return context.prisma.animal
           .findUnique({
             where: { id: parent.id || undefined },
           })
-          .animalBreed();
+          .Breeds();
       },
     });
     t.field("animalColors", {
-      type: "AnimalColor",
+      type: "Color",
       resolve: (parent, _, context: Context) => {
         return context.prisma.animal
           .findUnique({
             where: { id: parent.id || undefined },
           })
-          .animalColors();
+          .Colors();
       },
     });
   },
 });
 
-const AnimalBreed = objectType({
-  name: "AnimalBreed",
+const Color = objectType({
+  name: "Color",
   definition(t) {
     t.nonNull.int("id");
     t.nonNull.field("createdAt", { type: "DateTime" });
     t.nonNull.field("updatedAt", { type: "DateTime" });
-    t.field("animal", {
-      type: "Animal",
-      resolve: (parent, _, context: Context) => {
-        return context.prisma.animalBreed
-          .findUnique({
-            where: { id: parent.id || undefined },
-          })
-          .animal();
-      },
-    });
-    t.field("breed", {
-      type: "Breed",
-      resolve: (parent, _, context: Context) => {
-        return context.prisma.animalBreed
-          .findUnique({
-            where: { id: parent.id || undefined },
-          })
-          .breed();
-      },
-    });
+    t.nonNull.string("name");
   },
 });
 
@@ -287,7 +251,7 @@ const Species = objectType({
           .findUnique({
             where: { id: parent.id || undefined },
           })
-          .animal();
+          .Animal();
       },
     });
     t.field("breed", {
@@ -297,7 +261,7 @@ const Species = objectType({
           .findUnique({
             where: { id: parent.id || undefined },
           })
-          .breed();
+          .Breed();
       },
     });
   },
@@ -310,73 +274,30 @@ const Breed = objectType({
     t.nonNull.field("createdAt", { type: "DateTime" });
     t.nonNull.field("updatedAt", { type: "DateTime" });
     t.nonNull.string("name");
-    t.field("species", {
+    t.field("Species", {
       type: "Species",
       resolve: (parent, _, context: Context) => {
         return context.prisma.breed
           .findUnique({
             where: { id: parent.id || undefined },
           })
-          .species();
-      },
-    });
-    t.field("AnimalBreed", {
-      type: "AnimalBreed",
-      resolve: (parent, _, context: Context) => {
-        return context.prisma.breed
-          .findUnique({
-            where: { id: parent.id || undefined },
-          })
-          .AnimalBreed();
+          .Species();
       },
     });
   },
 });
-
-
-
-const AnimalColor = objectType({
-  name: "AnimalColor",
-  definition(t) {
-    t.nonNull.int("id");
-    t.nonNull.field("createdAt", { type: "DateTime" });
-    t.nonNull.field("updatedAt", { type: "DateTime" });
-    t.field("animal", {
-      type: "Animal",
-      resolve: (parent, _, context: Context) => {
-        return context.prisma.animalColor
-          .findUnique({
-            where: { id: parent.id || undefined },
-          })
-          .animal();
-      },
-    });
-    t.field("color", {
-      type: "Color",
-      resolve: (parent, _, context: Context) => {
-        return context.prisma.animalColor
-          .findUnique({
-            where: { id: parent.id || undefined },
-          })
-          .color();
-      },
-    });
-  },
-});
-
-
 
 const Post = objectType({
-  name: "Post",
+  name: 'Post',
   definition(t) {
-    t.nonNull.int("id");
-    t.nonNull.field("createdAt", { type: "DateTime" });
-    t.nonNull.field("updatedAt", { type: "DateTime" });
-    t.nonNull.string("title");
-    t.string("content");
-    t.nonNull.boolean("published");
-    t.field("author", {
-      type: "User",
+    t.nonNull.int('id')
+    t.nonNull.field('createdAt', { type: 'DateTime' })
+    t.nonNull.field('updatedAt', { type: 'DateTime' })
+    t.nonNull.string('title')
+    t.string('content')
+    t.nonNull.boolean('published')
+    t.field('author', {
+      type: 'Author',
       resolve: (parent, _, context: Context) => {
         return context.prisma.post
           .findUnique({
@@ -384,24 +305,35 @@ const Post = objectType({
           })
           .author();
       },
-    });
-    t.field("location", {
-      type: "Location",
-      resolve: (parent, _, context: Context) => {
-        return context.prisma.post
-          .findUnique({
-            where: { id: parent.id || undefined },
-          })
-          .location();
-      },
-    });
+    })
   },
-});
+})
+
+const Author = objectType({
+  name: 'Author',
+  definition(t) {
+    t.nonNull.int('id')
+    t.nonNull.field('createdAt', { type: 'DateTime' })
+    t.nonNull.field('updatedAt', { type: 'DateTime' })
+    t.string('username')
+    t.string('email')
+  }
+})
 
 export const schema = makeSchema({
   types: [
     Query,
-    User
+    User,
+    Location,
+    Post,
+    Address,
+    Animal,
+    Species,
+    Color,
+    Breed,
+    AddressType,
+    Author,
+    DateTime
   ],
   outputs: {
     schema: __dirname + "/../schema.graphql",

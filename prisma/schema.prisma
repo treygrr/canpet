@@ -23,9 +23,9 @@ model User {
   lastName   String     @db.VarChar(255)
   age        Int?       @db.SmallInt
   bio        String?    @db.VarChar(1000)
-  posts      Post[]
-  address    Address[]
-  location   Location[]
+  Posts      Post[]
+  Address    Address[]
+  Location   Location[]
 }
 
 model Location {
@@ -35,10 +35,10 @@ model Location {
   name      String    @db.VarChar(255)
   published Boolean   @default(false)
   authorId  Int
-  post      Post[]
-  animal    Animal[]
-  user      User[]
-  address   Address[]
+  Post      Post[]
+  Animal    Animal[]
+  User      User[]
+  Address   Address[]
 }
 
 model Address {
@@ -51,11 +51,11 @@ model Address {
   state         String       @db.VarChar(255)
   zip           String       @db.VarChar(255)
   country       String       @db.VarChar(255)
-  location      Location?    @relation(fields: [locationId], references: [id])
+  Location      Location?    @relation(fields: [locationId], references: [id])
   locationId    Int?
-  addressType   AddressType? @relation(fields: [addressTypeId], references: [id])
+  AddressType   AddressType? @relation(fields: [addressTypeId], references: [id])
   addressTypeId Int?
-  user          User?        @relation(fields: [userId], references: [id])
+  User          User?        @relation(fields: [userId], references: [id])
   userId        Int?
 }
 
@@ -64,7 +64,7 @@ model AddressType {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   name      String    @db.VarChar(255)
-  address   Address[]
+  Address   Address[]
 }
 
 model Post {
@@ -76,58 +76,38 @@ model Post {
   published  Boolean   @default(false)
   author     User      @relation(fields: [authorId], references: [id])
   authorId   Int
-  location   Location? @relation(fields: [locationId], references: [id])
+  Location   Location? @relation(fields: [locationId], references: [id])
   locationId Int?
 }
 
 model Animal {
-  id           Int           @id @default(autoincrement())
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  name         String        @db.VarChar(255)
-  adopted      Boolean       @default(false)
-  published    Boolean       @default(false)
-  location     Location      @relation(fields: [locationId], references: [id])
+  id           Int       @id @default(autoincrement())
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  name         String    @db.VarChar(255)
+  adopted      Boolean   @default(false)
+  published    Boolean   @default(false)
+  Location     Location  @relation(fields: [locationId], references: [id])
   locationId   Int
-  species      Species       @relation(fields: [speciesId], references: [id])
+  Species      Species   @relation(fields: [speciesId], references: [id])
   speciesId    Int
   birthDate    DateTime?
   adoptedDate  DateTime?
-  adoptionFee  Int?          @db.SmallInt
-  age          Int?          @db.SmallInt
-  weight       Int?          @db.SmallInt
-  height       Int?          @db.SmallInt
-  description  String?       @db.VarChar(1000)
-  animalBreed  AnimalBreed[]
-  animalColors AnimalColor[]
-}
-
-model AnimalColor {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  animal    Animal   @relation(fields: [animalId], references: [id])
-  animalId  Int
-  color     Color    @relation(fields: [colorId], references: [id])
-  colorId   Int
+  adoptionFee  Int?      @db.SmallInt
+  age          Int?      @db.SmallInt
+  weight       Int?      @db.SmallInt
+  height       Int?      @db.SmallInt
+  description  String?   @db.VarChar(1000)
+  Breeds       Breed[]
+  Colors Color[]
 }
 
 model Color {
-  id          Int           @id @default(autoincrement())
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  name        String        @db.VarChar(255)
-  animalColor AnimalColor[]
-}
-
-model AnimalBreed {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  animal    Animal   @relation(fields: [animalId], references: [id])
-  animalId  Int
-  breed     Breed    @relation(fields: [breedId], references: [id])
-  breedId   Int
+  name      String   @db.VarChar(255)
+  Animal    Animal[]
 }
 
 model Species {
@@ -135,16 +115,16 @@ model Species {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   name      String   @db.VarChar(255)
-  animal    Animal[]
-  breed     Breed[]
+  Animal    Animal[]
+  Breed     Breed[]
 }
 
 model Breed {
-  id          Int           @id @default(autoincrement())
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  name        String        @db.VarChar(255)
-  species     Species       @relation(fields: [speciesId], references: [id])
-  speciesId   Int
-  AnimalBreed AnimalBreed[]
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String   @db.VarChar(255)
+  Species   Species  @relation(fields: [speciesId], references: [id])
+  speciesId Int
+  Animals   Animal[]
 }
