@@ -1,13 +1,7 @@
 import {
-  intArg,
   makeSchema,
-  nonNull,
   objectType,
-  stringArg,
-  inputObjectType,
-  arg,
   asNexusMethod,
-  enumType,
 } from "nexus";
 import { DateTimeResolver } from "graphql-scalars";
 import { Context } from "./context";
@@ -17,10 +11,10 @@ export const DateTime = asNexusMethod(DateTimeResolver, "date");
 const Query = objectType({
   name: "Query",
   definition(t) {
-    t.nonNull.list.nonNull.field('AllUsers', {
+    t.list.field('Users', {
       type: "User",
       resolve: (_parent, _args, context: Context) => {
-        return context.prisma.user.findMany() || undefined;
+        return context.prisma.user.findMany();
       },
     });
   },
@@ -36,7 +30,7 @@ const User = objectType({
     t.nonNull.string("email");
     t.nonNull.string("firstName");
     t.nonNull.string("lastName");
-    t.string("age");
+    t.int("age");
     t.string("bio");
     t.list.field("Addresses", {
       type: "Address",
