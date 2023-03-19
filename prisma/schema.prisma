@@ -24,8 +24,8 @@ model User {
   age        Int?       @db.SmallInt
   bio        String?    @db.VarChar(1000)
   Posts      Post[]
-  Address    Address[]
-  Location   Location[]
+  Addresses  Address[]
+  Locations  Location[]
 }
 
 model Location {
@@ -34,11 +34,10 @@ model Location {
   updatedAt DateTime  @updatedAt
   name      String    @db.VarChar(255)
   published Boolean   @default(false)
-  authorId  Int
-  Post      Post[]
-  Animal    Animal[]
-  User      User[]
-  Address   Address[]
+  Posts     Post[]
+  Animals   Animal[]
+  Addresses Address[]
+  Users     User[]
 }
 
 model Address {
@@ -81,25 +80,25 @@ model Post {
 }
 
 model Animal {
-  id           Int       @id @default(autoincrement())
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  name         String    @db.VarChar(255)
-  adopted      Boolean   @default(false)
-  published    Boolean   @default(false)
-  Location     Location  @relation(fields: [locationId], references: [id])
-  locationId   Int
-  Species      Species   @relation(fields: [speciesId], references: [id])
-  speciesId    Int
-  birthDate    DateTime?
-  adoptedDate  DateTime?
-  adoptionFee  Int?      @db.SmallInt
-  age          Int?      @db.SmallInt
-  weight       Int?      @db.SmallInt
-  height       Int?      @db.SmallInt
-  description  String?   @db.VarChar(1000)
-  Breeds       Breed[]
-  Colors Color[]
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  name        String    @db.VarChar(255)
+  adopted     Boolean   @default(false)
+  published   Boolean   @default(false)
+  Location    Location  @relation(fields: [locationId], references: [id])
+  locationId  Int
+  Species     Species   @relation(fields: [speciesId], references: [id])
+  speciesId   Int
+  birthDate   DateTime?
+  adoptedDate DateTime?
+  adoptionFee Int?      @db.SmallInt
+  age         Int?      @db.SmallInt
+  weight      Int?      @db.SmallInt
+  height      Int?      @db.SmallInt
+  description String?   @db.VarChar(1000)
+  Breeds      Breed[]
+  Colors      Color[]
 }
 
 model Color {
@@ -115,8 +114,8 @@ model Species {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   name      String   @db.VarChar(255)
-  Animal    Animal[]
-  Breed     Breed[]
+  Animals   Animal[]
+  Breeds    Breed[]
 }
 
 model Breed {

@@ -110,32 +110,40 @@ const createBreed: Prisma.BreedCreateInput[] = [
 const createLocation: Prisma.LocationCreateInput[] = [
     {
         name: 'San Francisco SPCA',
-        authorId: 1,
-        Address: {
-          connectOrCreate: {
-            where: {
+        Users: {
+          connect: [
+            {
               id: 1,
-            },
-            create: {
-              addressLine1: '123 Main St',
-              addressLine2: 'Apt 1',
-              city: 'San Francisco',
-              state: 'CA',
-              zip: '94111',
-              country: 'USA',
-              AddressType: {
-                connectOrCreate: {
-                  where: {
-                    id: 1,
-                  },
-                  create: {
-                    name: 'Shipping',
-                  },
-                },
-              }
             }
+          ]
+        },
+        Posts: {
+          connect: {
+            id: 1,
           }
         },
+        Addresses: {
+            create: [
+              {
+                addressLine1: '123 Main St',
+                addressLine2: 'Apt 1',
+                city: 'San Francisco',
+                state: 'CA',
+                zip: '94111',
+                country: 'USA',
+                AddressType: {
+                  connectOrCreate: {
+                    where: {
+                      id: 1,
+                    },
+                    create: {
+                      name: 'Shipping',
+                    },
+                  },
+                }  
+              } 
+            ]
+        }
     },
 ];
 
@@ -180,7 +188,7 @@ const createAnimal: Prisma.AnimalCreateInput[] = [
             }
         },
         Location: {
-          connect:{
+          connect: {
             id: 1,
           }
         },
@@ -213,21 +221,34 @@ const userData: Prisma.UserCreateInput[] = [
                 },
             ],
         },
-        Address: {
+        Addresses: {
             create: [
                 {
-                    addressLine1: '123 Main St',
-                    addressLine2: 'Apt 1',
-                    city: 'San Francisco',
-                    state: 'CA',
-                    country: 'USA',
-                    zip: '94111',
-                    AddressType: {
-                        connect: {
-                            id: 1,
-                        },
+                  addressLine1: '123 Main St',
+                  addressLine2: 'Apt 1',
+                  city: 'San Francisco',
+                  state: 'CA',
+                  country: 'USA',
+                  zip: '94111',
+                  AddressType: {
+                    connect: {
+                        id: 1,
                     },
+                  }
                 },
+                {
+                  addressLine1: '123 Main St',
+                  addressLine2: 'Apt 1',
+                  city: 'San Francisco',
+                  state: 'CA',
+                  country: 'USA',
+                  zip: '94111',
+                  AddressType: {
+                    connect: {
+                        id: 2,
+                    },
+                  }
+                }
             ]
         },
     }
@@ -235,6 +256,18 @@ const userData: Prisma.UserCreateInput[] = [
 
 async function main() {
   console.log(`Start seeding ...`)
+  for (const at of createAddressTypes) {
+    const addressType = await prisma.addressType.create({
+        data: at,
+    })
+    console.log(`Created address type with id: ${addressType.id}`)
+  }
+  for (const u of userData) {
+    const user = await prisma.user.create({
+      data: u,
+    })
+    console.log(`Created user with id: ${user.id}`)
+  }
   for (const s of createSpecies) {
       const species = await prisma.species.create({
           data: s,
@@ -248,28 +281,16 @@ async function main() {
       console.log(`Created breed with id: ${breed.id}`)
   }
   for (const l of createLocation) {
-      const location = await prisma.location.create({
-          data: l,
-      })
-      console.log(`Created location with id: ${location.id}`)
+    const location = await prisma.location.create({
+        data: l,
+    })
+    console.log(`Created location with id: ${location.id}`)
   }
   for (const a of createAnimal) {
       const animal = await prisma.animal.create({
           data: a,
       })
       console.log(`Created animal with id: ${animal.id}`)
-  }
-  for (const at of createAddressTypes) {
-      const addressType = await prisma.addressType.create({
-          data: at,
-      })
-      console.log(`Created address type with id: ${addressType.id}`)
-  }
-  for (const u of userData) {
-    const user = await prisma.user.create({
-      data: u,
-    })
-    console.log(`Created user with id: ${user.id}`)
   }
   console.log(`Seeding finished.`)
 }

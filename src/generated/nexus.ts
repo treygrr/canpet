@@ -166,7 +166,7 @@ export interface NexusGenFieldTypes {
     adoptedDate: NexusGenScalars['DateTime'] | null; // DateTime
     adoptionFee: number | null; // Int
     age: number | null; // Int
-    animalColors: NexusGenRootTypes['Color'] | null; // Color
+    animalColors: Array<NexusGenRootTypes['Color'] | null> | null; // [Color]
     birthDate: NexusGenScalars['DateTime'] | null; // DateTime
     breeds: Array<NexusGenRootTypes['Breed'] | null> | null; // [Breed]
     createdAt: NexusGenScalars['DateTime']; // DateTime!
@@ -199,10 +199,10 @@ export interface NexusGenFieldTypes {
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
   Location: { // field return type
-    Addresses: NexusGenRootTypes['Address'] | null; // Address
-    Animals: NexusGenRootTypes['Animal'] | null; // Animal
-    Posts: NexusGenRootTypes['Post'] | null; // Post
-    User: NexusGenRootTypes['User'] | null; // User
+    Addresses: Array<NexusGenRootTypes['Address'] | null> | null; // [Address]
+    Animals: Array<NexusGenRootTypes['Animal'] | null> | null; // [Animal]
+    Posts: Array<NexusGenRootTypes['Post'] | null> | null; // [Post]
+    Users: Array<NexusGenRootTypes['User'] | null> | null; // [User]
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: number; // Int!
     name: string; // String!
@@ -222,8 +222,8 @@ export interface NexusGenFieldTypes {
     AllUsers: NexusGenRootTypes['User'][]; // [User!]!
   }
   Species: { // field return type
-    animal: NexusGenRootTypes['Animal'] | null; // Animal
-    breed: NexusGenRootTypes['Breed'] | null; // Breed
+    Animals: Array<NexusGenRootTypes['Animal'] | null> | null; // [Animal]
+    Breeds: Array<NexusGenRootTypes['Breed'] | null> | null; // [Breed]
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: number; // Int!
     name: string; // String!
@@ -231,7 +231,7 @@ export interface NexusGenFieldTypes {
   }
   User: { // field return type
     Addresses: Array<NexusGenRootTypes['Address'] | null> | null; // [Address]
-    Locations: NexusGenRootTypes['Location'] | null; // Location
+    Locations: Array<NexusGenRootTypes['Location'] | null> | null; // [Location]
     Posts: Array<NexusGenRootTypes['Post'] | null> | null; // [Post]
     age: string | null; // String
     bio: string | null; // String
@@ -307,7 +307,7 @@ export interface NexusGenFieldTypeNames {
     Addresses: 'Address'
     Animals: 'Animal'
     Posts: 'Post'
-    User: 'User'
+    Users: 'User'
     createdAt: 'DateTime'
     id: 'Int'
     name: 'String'
@@ -327,8 +327,8 @@ export interface NexusGenFieldTypeNames {
     AllUsers: 'User'
   }
   Species: { // field return type name
-    animal: 'Animal'
-    breed: 'Breed'
+    Animals: 'Animal'
+    Breeds: 'Breed'
     createdAt: 'DateTime'
     id: 'Int'
     name: 'String'

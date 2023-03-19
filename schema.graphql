@@ -29,7 +29,7 @@ type Animal {
   adoptedDate: DateTime
   adoptionFee: Int
   age: Int
-  animalColors: Color
+  animalColors: [Color]
   birthDate: DateTime
   breeds: [Breed]
   createdAt: DateTime!
@@ -71,10 +71,10 @@ A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `dat
 scalar DateTime
 
 type Location {
-  Addresses: Address
-  Animals: Animal
-  Posts: Post
-  User: User
+  Addresses: [Address]
+  Animals: [Animal]
+  Posts: [Post]
+  Users: [User]
   createdAt: DateTime!
   id: Int!
   name: String!
@@ -97,8 +97,8 @@ type Query {
 }
 
 type Species {
-  animal: Animal
-  breed: Breed
+  Animals: [Animal]
+  Breeds: [Breed]
   createdAt: DateTime!
   id: Int!
   name: String!
@@ -107,7 +107,7 @@ type Species {
 
 type User {
   Addresses: [Address]
-  Locations: Location
+  Locations: [Location]
   Posts: [Post]
   age: String
   bio: String
