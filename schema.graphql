@@ -82,6 +82,11 @@ type Location {
   updatedAt: DateTime!
 }
 
+type Mutation {
+  createUser(email: String!, firstName: String!, lastName: String!, password: String!, username: String!): User
+  loginUser(password: String!, username: String!): User
+}
+
 type Post {
   author: Author
   content: String

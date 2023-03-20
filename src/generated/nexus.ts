@@ -102,6 +102,7 @@ export interface NexusGenObjects {
     published: boolean; // Boolean!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
+  Mutation: {};
   Post: { // root type
     content?: string | null; // String
     createdAt: NexusGenScalars['DateTime']; // DateTime!
@@ -209,6 +210,10 @@ export interface NexusGenFieldTypes {
     published: boolean; // Boolean!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
+  Mutation: { // field return type
+    createUser: NexusGenRootTypes['User'] | null; // User
+    loginUser: NexusGenRootTypes['User'] | null; // User
+  }
   Post: { // field return type
     author: NexusGenRootTypes['Author'] | null; // Author
     content: string | null; // String
@@ -314,6 +319,10 @@ export interface NexusGenFieldTypeNames {
     published: 'Boolean'
     updatedAt: 'DateTime'
   }
+  Mutation: { // field return type name
+    createUser: 'User'
+    loginUser: 'User'
+  }
   Post: { // field return type name
     author: 'Author'
     content: 'String'
@@ -351,6 +360,19 @@ export interface NexusGenFieldTypeNames {
 }
 
 export interface NexusGenArgTypes {
+  Mutation: {
+    createUser: { // args
+      email: string; // String!
+      firstName: string; // String!
+      lastName: string; // String!
+      password: string; // String!
+      username: string; // String!
+    }
+    loginUser: { // args
+      password: string; // String!
+      username: string; // String!
+    }
+  }
 }
 
 export interface NexusGenAbstractTypeMembers {

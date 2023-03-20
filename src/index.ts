@@ -6,6 +6,8 @@ import { Context, createContext } from './context'
 const start = async () => {
   const server = new ApolloServer<Context>({ schema })
 
+
+  
   const { url } = await startStandaloneServer(server, {
     context: createContext,
     listen: { port: 4000 }

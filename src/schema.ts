@@ -2,9 +2,14 @@ import {
   makeSchema,
   objectType,
   asNexusMethod,
+  nonNull,
+  stringArg,
 } from "nexus";
 import { DateTimeResolver } from "graphql-scalars";
 import { Context } from "./context";
+import bcrypt from "bcrypt";
+import md5 from "md5";
+import crypto from "crypto";
 
 export const DateTime = asNexusMethod(DateTimeResolver, "date");
 
@@ -15,6 +20,75 @@ const Query = objectType({
       type: "User",
       resolve: (_parent, _args, context: Context) => {
         return context.prisma.user.findMany();
+      },
+    });
+  },
+});
+
+const Mutation = objectType({
+  name: "Mutation",
+  definition(t) {
+    t.field("loginUser", {
+      type: "User",
+      args: {
+        username: nonNull(stringArg()),
+        password: nonNull(stringArg()),
+      },
+      resolve: async (_parent, args, context: Context) => {
+        const user = await context.prisma.user.findUnique({
+          where: { username: args.username }
+        });
+
+        if (!user) {
+          throw new Error("No user with that username found.");
+        }
+
+        const incomingPassword = md5(user?.salt+args.password)
+
+        if (user?.password !== incomingPassword) {
+          throw new Error("Incorrect password.");
+        }
+        return user;
+      }
+    }),
+    t.field("createUser", {
+      type: "User",
+      args: {
+        username: nonNull(stringArg()),
+        email: nonNull(stringArg()),
+        firstName: nonNull(stringArg()),
+        lastName: nonNull(stringArg()),
+        password: nonNull(stringArg()),
+      },
+      resolve: async (_parent, args, context: Context) => {
+        // check for unique email and username
+        const email = await context.prisma.user.findUnique({
+          where: { email: args.email },
+        });
+        const username = await context.prisma.user.findUnique({
+          where: { username: args.username },
+        });
+        const usernameLowercase = await context.prisma.user.findUnique({
+          where: { username: args.username.toLowerCase() },
+        });
+        if (email) {
+          throw new Error("A user with that email is already registered.");
+        }
+        if (username || usernameLowercase) {
+          throw new Error("A user with that username is already registered.");
+        }
+        const salt = bcrypt.genSaltSync(20);
+
+        return context.prisma.user.create({
+          data: {
+            username: args.username,
+            email: args.email,
+            firstName: args.firstName,
+            lastName: args.lastName,
+            password:  md5(salt+args.password),
+            salt: salt,
+          },
+        });
       },
     });
   },
@@ -307,8 +381,10 @@ const Author = objectType({
 
 export const schema = makeSchema({
   types: [
-    User,
     Query,
+    Mutation,
+    ////////////
+    User,
     Location,
     Post,
     Address,
