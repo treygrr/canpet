@@ -3,14 +3,13 @@ import {
   objectType,
   asNexusMethod,
   nonNull,
-  stringArg,
-  fieldAuthorizePlugin
+  stringArg
 } from "nexus";
 import { DateTimeResolver } from "graphql-scalars";
 import { Context } from "./context";
 import bcrypt from "bcrypt";
 import md5 from "md5";
-import crypto from "crypto";
+import jwt from "jsonwebtoken";
 
 export const DateTime = asNexusMethod(DateTimeResolver, "date");
 
@@ -48,6 +47,20 @@ const Mutation = objectType({
         if (user?.password !== incomingPassword) {
           throw new Error("Incorrect password.");
         }
+
+        const privateKey = user.privateKey
+        const requestIp = context.req.socket.remoteAddress
+        const requestUserAgent = context.req.headers['user-agent']
+        
+        // generate a permanent refresh token
+        const refreshToken = jwt.sign({ id: user?.id }, privateKey, { expiresIn: '1y' });
+
+        // generate a temporary access token
+        const accessToken = jwt.sign({ id: user?.id, ip: requestIp, userAgent: requestUserAgent }, privateKey, { expiresIn: '15m' });
+
+        // set authorization bearer token
+        context.res.setHeader('Authorization', 'Bearer ' + user?.id);
+
         return user;
       }
     }),

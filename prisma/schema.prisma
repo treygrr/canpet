@@ -37,7 +37,8 @@ model Device {
   User      User     @relation(fields: [userId], references: [id])
   userId    Int
   userAgent String   @db.VarChar(1000)
-  accessToken String? @unique
+  ipAddress String   @db.VarChar(255)
+  refreshToken String? @unique
 }
 
 model Location {
