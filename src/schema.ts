@@ -4,6 +4,7 @@ import {
   asNexusMethod,
   nonNull,
   stringArg,
+  fieldAuthorizePlugin
 } from "nexus";
 import { DateTimeResolver } from "graphql-scalars";
 import { Context } from "./context";
@@ -38,7 +39,6 @@ const Mutation = objectType({
         const user = await context.prisma.user.findUnique({
           where: { username: args.username }
         });
-
         if (!user) {
           throw new Error("No user with that username found.");
         }
