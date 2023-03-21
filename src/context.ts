@@ -1,16 +1,16 @@
 import { PrismaClient } from '@prisma/client'
-import { IncomingMessage, ServerResponse } from 'http'
+import { Request, Response, NextFunction } from 'express'
 
 export interface Context {
   prisma: PrismaClient,
-  req: IncomingMessage,
-  res: ServerResponse
+  request: Request,
+  response: Response,
 }
 
 const prisma = new PrismaClient()
 
-export const createContext = async ({ req, res }: { req: IncomingMessage, res: ServerResponse }) => ({
+export const createContext = async ({ req, res }: { req: Request, res: Response }) => ({
   prisma: prisma,
-  req: req,
-  res: res
+  request: req,
+  response: res,
 })

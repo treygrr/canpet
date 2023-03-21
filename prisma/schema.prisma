@@ -30,15 +30,15 @@ model User {
 }
 
 model Device {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  name      String   @db.VarChar(255)
-  User      User     @relation(fields: [userId], references: [id])
-  userId    Int
-  userAgent String   @db.VarChar(1000)
-  ipAddress String   @db.VarChar(255)
-  refreshToken String? @unique
+  id           Int      @id @default(autoincrement())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  name         String   @db.VarChar(255)
+  User         User     @relation(fields: [userId], references: [id])
+  userId       Int
+  userAgent    String   @db.VarChar(1000)
+  ipAddress    String   @db.VarChar(255)
+  refreshToken String?  @unique
 }
 
 model Location {
