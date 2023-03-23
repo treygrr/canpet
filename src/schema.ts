@@ -6,26 +6,17 @@ import {
   stringArg
 } from "nexus";
 import { DateTimeResolver } from "graphql-scalars";
-import { Context } from "./context";
+import { Context } from "./context.js";
 import bcrypt from "bcrypt";
 import md5 from "md5";
 import jwt from "jsonwebtoken";
 import { CookieOptions } from "express";
 import crypto from "crypto";
 
+import { Query } from "././graphql/Resolvers/queries";
+
 export const DateTime = asNexusMethod(DateTimeResolver, "date");
 
-const Query = objectType({
-  name: "Query",
-  definition(t) {
-    t.list.field('Users', {
-      type: "User",
-      resolve: (_parent, _args, context: Context) => {
-        return context.prisma.user.findMany();
-      },
-    });
-  },
-});
 
 const Mutation = objectType({
   name: "Mutation",
