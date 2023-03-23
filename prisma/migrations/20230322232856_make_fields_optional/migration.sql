@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Device" ALTER COLUMN "name" DROP NOT NULL,
+ALTER COLUMN "userAgent" DROP NOT NULL,
+ALTER COLUMN "ipAddress" DROP NOT NULL;

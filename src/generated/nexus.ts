@@ -102,6 +102,13 @@ export interface NexusGenObjects {
     published: boolean; // Boolean!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
+  LoginUser: { // root type
+    authToken: string; // String!
+    id: number; // Int!
+  }
+  LogoutUser: { // root type
+    id: number; // Int!
+  }
   Mutation: {};
   Post: { // root type
     content?: string | null; // String
@@ -210,9 +217,17 @@ export interface NexusGenFieldTypes {
     published: boolean; // Boolean!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
+  LoginUser: { // field return type
+    authToken: string; // String!
+    id: number; // Int!
+  }
+  LogoutUser: { // field return type
+    id: number; // Int!
+  }
   Mutation: { // field return type
     createUser: NexusGenRootTypes['User'] | null; // User
-    loginUser: NexusGenRootTypes['User'] | null; // User
+    loginUser: NexusGenRootTypes['LoginUser'] | null; // LoginUser
+    logoutUser: NexusGenRootTypes['LogoutUser'] | null; // LogoutUser
   }
   Post: { // field return type
     author: NexusGenRootTypes['Author'] | null; // Author
@@ -319,9 +334,17 @@ export interface NexusGenFieldTypeNames {
     published: 'Boolean'
     updatedAt: 'DateTime'
   }
+  LoginUser: { // field return type name
+    authToken: 'String'
+    id: 'Int'
+  }
+  LogoutUser: { // field return type name
+    id: 'Int'
+  }
   Mutation: { // field return type name
     createUser: 'User'
-    loginUser: 'User'
+    loginUser: 'LoginUser'
+    logoutUser: 'LogoutUser'
   }
   Post: { // field return type name
     author: 'Author'

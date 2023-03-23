@@ -82,9 +82,19 @@ type Location {
   updatedAt: DateTime!
 }
 
+type LoginUser {
+  authToken: String!
+  id: Int!
+}
+
+type LogoutUser {
+  id: Int!
+}
+
 type Mutation {
   createUser(email: String!, firstName: String!, lastName: String!, password: String!, username: String!): User
-  loginUser(password: String!, username: String!): User
+  loginUser(password: String!, username: String!): LoginUser
+  logoutUser: LogoutUser
 }
 
 type Post {

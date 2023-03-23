@@ -8,6 +8,7 @@ import http from 'http';
 import cors from 'cors';
 import { CorsOptions } from 'cors';
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 
 
 const start = async () => {
@@ -23,22 +24,28 @@ const start = async () => {
 
   await server.start();
 
-  app.use(cors())
+  const corsOptions: CorsOptions = {
+    origin: ['http://localhost:3000', 'http://localhost:4000', 'https://studio.apollographql.com'],
+    exposedHeaders: ['Set-Cookie', 'auth', '*', 'Access-Control-Allow-Origin'],
+    credentials: true,
+  };
+
+  app.use(cors(corsOptions));
+
+  app.set('trust proxy', 1);
+
+  app.use(bodyParser.json());
+
+  app.use(cookieParser());
 
   app.use(
     '/graphql',
     expressMiddleware<Context>(server, {
       context: createContext,
     }),
-  )
-
-  app.use('/setHeaderCookie', (req, res) => {
-    // set a fake auth cookie
-    res.setHeader('Set-Cookie', 'auth=1; Path=/; HttpOnly');
-    res.send('ok');
-  });
+  );
 
   new Promise<void>((resolve) => httpServer.listen({ port: 4000 }, resolve));
 };
 
-start().then(() => console.log('Server is running on http://localhost:4000'));
+start().then(() => console.log('Graphql Server is running on http://localhost:4000/graphql'));

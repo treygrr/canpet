@@ -33,11 +33,13 @@ model Device {
   id           Int      @id @default(autoincrement())
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
-  name         String   @db.VarChar(255)
+  name         String?  @db.VarChar(255)
   User         User     @relation(fields: [userId], references: [id])
   userId       Int
-  userAgent    String   @db.VarChar(1000)
-  ipAddress    String   @db.VarChar(255)
+  userAgent    String?  @db.VarChar(1000)
+  publicKey    String?  @db.VarChar(5000)
+  privateKey   String?  @db.VarChar(5000)
+  ipAddress    String?  @db.VarChar(255)
   refreshToken String?  @unique
 }
 
