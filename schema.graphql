@@ -70,6 +70,10 @@ A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `dat
 """
 scalar DateTime
 
+type DeletedUserDevices {
+  deletedIds: [Int]
+}
+
 type Location {
   Addresses: [Address]
   Animals: [Animal]
@@ -93,6 +97,7 @@ type LogoutUser {
 
 type Mutation {
   createUser(email: String!, firstName: String!, lastName: String!, password: String!, username: String!): User
+  deleteUserDevices(deviceId: Int, deviceIds: [Int]): DeletedUserDevices
   loginUser(password: String!, username: String!): LoginUser
   logoutUser: LogoutUser
 }
@@ -108,6 +113,7 @@ type Post {
 }
 
 type Query {
+  UserDevices: [UserDevice]
   Users: [User]
 }
 
@@ -133,4 +139,17 @@ type User {
   lastName: String!
   updatedAt: DateTime!
   username: String!
+}
+
+type UserDevice {
+  createdAt: DateTime!
+  id: Int!
+  ipAddress: String
+  name: String
+  privateKey: String
+  publicKey: String
+  refreshToken: String
+  updatedAt: DateTime!
+  userAgent: String
+  userId: Int
 }

@@ -5,6 +5,7 @@
 
 
 import type { Context } from "./../context"
+import type { FieldAuthorizeResolver } from "nexus/dist/plugins/fieldAuthorizePlugin"
 import type { core } from "nexus"
 declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {
@@ -95,6 +96,9 @@ export interface NexusGenObjects {
     name: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
+  DeletedUserDevices: { // root type
+    deletedIds?: Array<number | null> | null; // [Int]
+  }
   Location: { // root type
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: number; // Int!
@@ -135,6 +139,18 @@ export interface NexusGenObjects {
     lastName: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
     username: string; // String!
+  }
+  UserDevice: { // root type
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    id: number; // Int!
+    ipAddress?: string | null; // String
+    name?: string | null; // String
+    privateKey?: string | null; // String
+    publicKey?: string | null; // String
+    refreshToken?: string | null; // String
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
+    userAgent?: string | null; // String
+    userId?: number | null; // Int
   }
 }
 
@@ -206,6 +222,9 @@ export interface NexusGenFieldTypes {
     name: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
+  DeletedUserDevices: { // field return type
+    deletedIds: Array<number | null> | null; // [Int]
+  }
   Location: { // field return type
     Addresses: Array<NexusGenRootTypes['Address'] | null> | null; // [Address]
     Animals: Array<NexusGenRootTypes['Animal'] | null> | null; // [Animal]
@@ -226,6 +245,7 @@ export interface NexusGenFieldTypes {
   }
   Mutation: { // field return type
     createUser: NexusGenRootTypes['User'] | null; // User
+    deleteUserDevices: NexusGenRootTypes['DeletedUserDevices'] | null; // DeletedUserDevices
     loginUser: NexusGenRootTypes['LoginUser'] | null; // LoginUser
     logoutUser: NexusGenRootTypes['LogoutUser'] | null; // LogoutUser
   }
@@ -239,6 +259,7 @@ export interface NexusGenFieldTypes {
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
   Query: { // field return type
+    UserDevices: Array<NexusGenRootTypes['UserDevice'] | null> | null; // [UserDevice]
     Users: Array<NexusGenRootTypes['User'] | null> | null; // [User]
   }
   Species: { // field return type
@@ -262,6 +283,18 @@ export interface NexusGenFieldTypes {
     lastName: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
     username: string; // String!
+  }
+  UserDevice: { // field return type
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    id: number; // Int!
+    ipAddress: string | null; // String
+    name: string | null; // String
+    privateKey: string | null; // String
+    publicKey: string | null; // String
+    refreshToken: string | null; // String
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
+    userAgent: string | null; // String
+    userId: number | null; // Int
   }
 }
 
@@ -323,6 +356,9 @@ export interface NexusGenFieldTypeNames {
     name: 'String'
     updatedAt: 'DateTime'
   }
+  DeletedUserDevices: { // field return type name
+    deletedIds: 'Int'
+  }
   Location: { // field return type name
     Addresses: 'Address'
     Animals: 'Animal'
@@ -343,6 +379,7 @@ export interface NexusGenFieldTypeNames {
   }
   Mutation: { // field return type name
     createUser: 'User'
+    deleteUserDevices: 'DeletedUserDevices'
     loginUser: 'LoginUser'
     logoutUser: 'LogoutUser'
   }
@@ -356,6 +393,7 @@ export interface NexusGenFieldTypeNames {
     updatedAt: 'DateTime'
   }
   Query: { // field return type name
+    UserDevices: 'UserDevice'
     Users: 'User'
   }
   Species: { // field return type name
@@ -380,6 +418,18 @@ export interface NexusGenFieldTypeNames {
     updatedAt: 'DateTime'
     username: 'String'
   }
+  UserDevice: { // field return type name
+    createdAt: 'DateTime'
+    id: 'Int'
+    ipAddress: 'String'
+    name: 'String'
+    privateKey: 'String'
+    publicKey: 'String'
+    refreshToken: 'String'
+    updatedAt: 'DateTime'
+    userAgent: 'String'
+    userId: 'Int'
+  }
 }
 
 export interface NexusGenArgTypes {
@@ -390,6 +440,10 @@ export interface NexusGenArgTypes {
       lastName: string; // String!
       password: string; // String!
       username: string; // String!
+    }
+    deleteUserDevices: { // args
+      deviceId?: number | null; // Int
+      deviceIds?: Array<number | null> | null; // [Int]
     }
     loginUser: { // args
       password: string; // String!
@@ -461,6 +515,15 @@ declare global {
   interface NexusGenPluginInputTypeConfig<TypeName extends string> {
   }
   interface NexusGenPluginFieldConfig<TypeName extends string, FieldName extends string> {
+    /**
+     * Authorization for an individual field. Returning "true"
+     * or "Promise<true>" means the field can be accessed.
+     * Returning "false" or "Promise<false>" will respond
+     * with a "Not Authorized" error for the field.
+     * Returning or throwing an error will also prevent the
+     * resolver from executing.
+     */
+    authorize?: FieldAuthorizeResolver<TypeName, FieldName>
   }
   interface NexusGenPluginInputFieldConfig<TypeName extends string, FieldName extends string> {
   }

@@ -10,7 +10,6 @@ import { CorsOptions } from 'cors';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 
-
 const start = async () => {
 
   const app = express();
