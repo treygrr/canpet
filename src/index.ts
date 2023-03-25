@@ -9,11 +9,13 @@ import cors from 'cors';
 import { CorsOptions } from 'cors';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
+import { applyMiddleware } from 'graphql-middleware';
+import { Authentication } from './plugins/authentication'
 
 const start = async () => {
 
   const app = express();
-
+``
   const httpServer = http.createServer(app);
 
   const server = new ApolloServer<Context>({
@@ -39,7 +41,7 @@ const start = async () => {
 
   app.use(
     '/graphql',
-    expressMiddleware<Context>(server, {
+    expressMiddleware(server, {
       context: createContext,
     }),
   );

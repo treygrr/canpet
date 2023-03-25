@@ -5,6 +5,7 @@ export interface Context {
   prisma: PrismaClient,
   request: Request,
   response: Response,
+  userId?: number,
 }
 
 const prisma = new PrismaClient()

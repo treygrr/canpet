@@ -4,7 +4,6 @@ import CreateUser from './CreateUser'
 import LoginUser from './LoginUser'
 import LogoutUser from './LogoutUser'
 import DeleteUserDevices from './DeleteUserDevices'
-import isAuthenticated from '../../../plugins/authentication'
 
 export const Mutation = objectType({
   name: 'Mutation',

@@ -1312,6 +1312,13 @@ negotiator@0.6.3, negotiator@^0.6.3:
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.3.tgz#58e323a72fedc0d6f9cd4d31fe49f51479590ccd"
   integrity sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==
 
+nexus-shield@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/nexus-shield/-/nexus-shield-2.2.1.tgz#3a0db02cc9e5346a8e349ceb92a70c14b8815745"
+  integrity sha512-+rCYPEYE+k9ldCJ/4TjEdhD5Vm2TRIa8d8cx+oh5/gmvsxpIasj/XVlMYNQlw1tsWdb35WasfSBWo13W8HQZHA==
+  dependencies:
+    object-hash "^3.0.0"
+
 nexus@1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/nexus/-/nexus-1.3.0.tgz#d7e2671d48bf887e30e2815f509bbf4b0ee2a02b"
