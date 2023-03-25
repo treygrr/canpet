@@ -15,11 +15,11 @@ import { Authentication } from './plugins/authentication'
 const start = async () => {
 
   const app = express();
-``
+
   const httpServer = http.createServer(app);
 
   const server = new ApolloServer<Context>({
-    schema,
+    schema: applyMiddleware(schema, Authentication),
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
   });
 
@@ -46,7 +46,7 @@ const start = async () => {
     }),
   );
 
-  new Promise<void>((resolve) => httpServer.listen({ port: 4000 }, resolve));
+  await new Promise<void>((resolve) => httpServer.listen({ port: 4000 }, resolve));
 };
 
 start().then(() => console.log('Graphql Server is running on http://localhost:4000/graphql'));
